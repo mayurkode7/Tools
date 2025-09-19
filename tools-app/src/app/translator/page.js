@@ -5,10 +5,24 @@ import { useState } from "react";
 import { Form } from "react-bootstrap";
 
 export default function Translator() {
-  const [sourceLanguage, setSourceLanguage] = useState("");
-  const [targetLanguage, setTargetLanguage] = useState("");
+  const [sourceLanguage, setSourceLanguage] = useState("en");
+  const [targetLanguage, setTargetLanguage] = useState("es");
   const [text, setText] = useState("");
   const [translatedText, setTranslatedText] = useState("");
+
+  const languageOptions = [
+    { code: "en", name: "English" },
+    { code: "es", name: "Spanish" },
+    { code: "fr", name: "French" },
+    { code: "de", name: "German" },
+    { code: "hi", name: "Hindi" },
+    { code: "mr", name: "Marathi" },
+    { code: "pt", name: "Portuguese" },
+    { code: "ru", name: "Russian" },
+    { code: "ar", name: "Arabic" },
+    { code: "zh", name: "Chinese (Simplified)" },
+    { code: "ja", name: "Japanese" },
+  ];
 
   return (
     <div className={styles.page}>
@@ -18,22 +32,30 @@ export default function Translator() {
         <Form style={{ width: 320 }}>
           <Form.Group className="mb-3" controlId="sourceLanguage">
             <Form.Label>Source language</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="e.g., English"
+            <Form.Select
               value={sourceLanguage}
               onChange={(e) => setSourceLanguage(e.target.value)}
-            />
+            >
+              {languageOptions.map((opt) => (
+                <option key={opt.code} value={opt.code}>
+                  {opt.name}
+                </option>
+              ))}
+            </Form.Select>
           </Form.Group>
 
           <Form.Group className="mb-3" controlId="targetLanguage">
             <Form.Label>Target language</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="e.g., Spanish"
+            <Form.Select
               value={targetLanguage}
               onChange={(e) => setTargetLanguage(e.target.value)}
-            />
+            >
+              {languageOptions.map((opt) => (
+                <option key={opt.code} value={opt.code}>
+                  {opt.name}
+                </option>
+              ))}
+            </Form.Select>
           </Form.Group>
         </Form>
         <Form style={{ width: 320 }}>
