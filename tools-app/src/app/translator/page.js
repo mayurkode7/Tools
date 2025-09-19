@@ -3,92 +3,65 @@
 import styles from "../page.module.css";
 import { useState } from "react";
 import { Form } from "react-bootstrap";
+import { useTranslation } from "@codethicket/react-ai-translator";
+import { useEffect } from "react";
+import LanguageSelector from "./LanguageSelector";
+import Progress from "./progress";
 
 export default function Translator() {
-  const [sourceLanguage, setSourceLanguage] = useState("en");
-  const [targetLanguage, setTargetLanguage] = useState("es");
-  const [text, setText] = useState("");
-  const [translatedText, setTranslatedText] = useState("");
-
-  const languageOptions = [
-    { code: "en", name: "English" },
-    { code: "es", name: "Spanish" },
-    { code: "fr", name: "French" },
-    { code: "de", name: "German" },
-    { code: "hi", name: "Hindi" },
-    { code: "mr", name: "Marathi" },
-    { code: "pt", name: "Portuguese" },
-    { code: "ru", name: "Russian" },
-    { code: "ar", name: "Arabic" },
-    { code: "zh", name: "Chinese (Simplified)" },
-    { code: "ja", name: "Japanese" },
-  ];
-
-  return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <h1>Translator</h1>
-
-        <Form style={{ width: 320 }}>
-          <Form.Group className="mb-3" controlId="sourceLanguage">
-            <Form.Label>Source language</Form.Label>
-            <Form.Select
-              value={sourceLanguage}
-              onChange={(e) => setSourceLanguage(e.target.value)}
-            >
-              {languageOptions.map((opt) => (
-                <option key={opt.code} value={opt.code}>
-                  {opt.name}
-                </option>
-              ))}
-            </Form.Select>
-          </Form.Group>
-
-          <Form.Group className="mb-3" controlId="targetLanguage">
-            <Form.Label>Target language</Form.Label>
-            <Form.Select
-              value={targetLanguage}
-              onChange={(e) => setTargetLanguage(e.target.value)}
-            >
-              {languageOptions.map((opt) => (
-                <option key={opt.code} value={opt.code}>
-                  {opt.name}
-                </option>
-              ))}
-            </Form.Select>
-          </Form.Group>
-        </Form>
-        <Form style={{ width: 320 }}>
-          <Form.Group className="mb-3" controlId="textToTranslate">
-            <Form.Label>Text</Form.Label>
-            <Form.Control
-              as="textarea"
-              rows={6}
-              placeholder="Enter paragraph to translate"
-              value={text}
-              onChange={(e) => setText(e.target.value)}
-            />
-          </Form.Group>
-        </Form>
-
-        <Form style={{ width: 320 }}>
-          <Form.Group className="mb-3" controlId="translatedText">
-            <Form.Label>Translated text</Form.Label>
-            <Form.Control
-              as="textarea"
-              rows={6}
-              placeholder="Translation will appear here"
-              value={translatedText}
-              readOnly
-            />
-          </Form.Group>
-        </Form>
-      </main>
-      <footer className={styles.footer}>
-        <p>copyright 2025. Developed by Mayur Vijay Kode.</p>
-      </footer>
-    </div>
-  );
+   // Inputs and outputs
+   const [input, setInput] = useState('I love walking my dog.');
+   const [sourceLanguage, setSourceLanguage] = useState('eng_Latn');
+   const [targetLanguage, setTargetLanguage] = useState('fra_Latn');
+   const [output, setOutput] = useState('');
+ 
+   // Create a reference to the worker object.
+   // const worker = useRef(null);
+  //  const workerScript = new URL('./worker.js', import.meta.url); // Path to your worker file
+ 
+   const { translate, translatedText, loading, progress, modelLoading } = useTranslation();
+ 
+   useEffect(()=>{
+     translate(input,
+       sourceLanguage,
+       targetLanguage)
+   },[])
+ 
+ 
+   return (
+     <div>
+       
+       <h1>ML-powered multilingual translation in React on the browser (<i>no cost</i>)!</h1>
+ 
+       <div className='container'>
+         <div className='language-container'>
+           <LanguageSelector type={"Source"} defaultLanguage={"eng_Latn"} onChange={x => setSourceLanguage(x.target.value)} />
+           <LanguageSelector type={"Target"} defaultLanguage={"fra_Latn"} onChange={x => setTargetLanguage(x.target.value)} />
+         </div>
+ 
+         <div className='textbox-container'>
+           <textarea value={input} rows={3} onChange={e => setInput(e.target.value)}></textarea>
+           <div style={{width:'50%'}}>{translatedText}</div>
+         </div>
+       </div>
+ 
+       <button className='translate-button' disabled={modelLoading||loading} onClick={()=>translate(input,
+       sourceLanguage,
+       targetLanguage)}>Translate</button>
+ 
+ <div className='progress-bars-container'>
+ {loading && (
+           <label>{`Loading models... (happens only once, please be patient :))`}</label>
+         )}
+       
+         {progress.map(data => (
+           <div key={data.file}>
+             <Progress text={data.file} percentage={data.progress} />
+           </div>
+         ))}
+       </div>
+     </div>
+   )
 }
 
 
