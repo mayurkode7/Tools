@@ -1,10 +1,9 @@
 "use client";
 
 import styles from "../page.module.css";
-import { useState } from "react";
-import { Form } from "react-bootstrap";
+import { useState, useEffect } from "react";
+import { Form, Button, Row, Col, Container, Spinner } from "react-bootstrap";
 import { useTranslation } from "@codethicket/react-ai-translator";
-import { useEffect } from "react";
 
 const LANGUAGES = {
   "Acehnese (Arabic script)": "ace_Arab",
@@ -215,9 +214,14 @@ const LANGUAGES = {
 
 function LanguageSelector({ type, onChange, defaultLanguage }) {
   return (
-    <div className="language-selector">
-      <label>{type}: </label>
-      <select onChange={onChange} defaultValue={defaultLanguage}>
+    <Form.Group className="mb-3">
+      <Form.Label>{type} Language</Form.Label>
+      <Form.Select
+        onChange={onChange}
+        defaultValue={defaultLanguage}
+        size="lg"
+        style={{ minWidth: '200px' }}
+      >
         {Object.entries(LANGUAGES).map(([key, value]) => {
           return (
             <option key={key} value={value}>
@@ -225,17 +229,28 @@ function LanguageSelector({ type, onChange, defaultLanguage }) {
             </option>
           );
         })}
-      </select>
-    </div>
-  );
+      </Form.Select>
+    </Form.Group>
+  );  
 }
 
 function Progress({ text, percentage }) {
   percentage = percentage ?? 0;
   return (
-    <div className="progress-container">
-      <div className="progress-bar" style={{ width: `${percentage}%` }}>
-        {text} ({`${percentage.toFixed(2)}%`})
+    <div className="mb-2">
+      <div className="d-flex justify-content-between align-items-center mb-1">
+        <small className="text-muted">{text}</small>
+        <small className="text-muted">{percentage.toFixed(1)}%</small>
+      </div>
+      <div className="progress" style={{ height: '8px' }}>
+        <div 
+          className="progress-bar bg-primary" 
+          role="progressbar" 
+          style={{ width: `${percentage}%` }}
+          aria-valuenow={percentage} 
+          aria-valuemin="0" 
+          aria-valuemax="100"
+        ></div>
       </div>
     </div>
   );
@@ -260,55 +275,98 @@ export default function Translator() {
   }, []);
 
   return (
-    <div>
-      <h1>
-        ML-powered multilingual translation in React on the browser (
-        <i>no cost</i>)!
-      </h1>
+    <div className={styles.page}>
+      <main className={styles.main}>
+        <h1>Translator</h1>
+        <p className="text-muted" style={{ marginTop: -16 }}>
+          ML-powered multilingual translation on the browser (no cost)!
+        </p>
 
-      <div className="container">
-        <div className="language-container">
-          <LanguageSelector
-            type={"Source"}
-            defaultLanguage={"eng_Latn"}
-            onChange={(x) => setSourceLanguage(x.target.value)}
-          />
-          <LanguageSelector
-            type={"Target"}
-            defaultLanguage={"fra_Latn"}
-            onChange={(x) => setTargetLanguage(x.target.value)}
-          />
-        </div>
+        <Container style={{ width: '100%', maxWidth: '800px' }}>
+          <Row className="mb-4">
+            <Col md={6}>
+              <LanguageSelector
+                type="Source"
+                defaultLanguage="eng_Latn"
+                onChange={(x) => setSourceLanguage(x.target.value)}
+              />
+            </Col>
+            <Col md={6}>
+              <LanguageSelector
+                type="Target"
+                defaultLanguage="fra_Latn"
+                onChange={(x) => setTargetLanguage(x.target.value)}
+              />
+            </Col>
+          </Row>
 
-        <div className="textbox-container">
-          <textarea
-            value={input}
-            rows={3}
-            onChange={(e) => setInput(e.target.value)}
-          ></textarea>
-          <div style={{ width: "50%" }}>{translatedText}</div>
-        </div>
-      </div>
+          <Row className="mb-4">
+            <Col md={6}>
+              <Form.Group>
+                <Form.Label>Text to translate</Form.Label>
+                <Form.Control
+                  as="textarea"
+                  rows={6}
+                  value={input}
+                  onChange={(e) => setInput(e.target.value)}
+                  placeholder="Enter text to translate..."
+                  disabled={loading || modelLoading}
+                />
+              </Form.Group>
+            </Col>
+            <Col md={6}>
+              <Form.Group>
+                <Form.Label>Translated text</Form.Label>
+                <Form.Control
+                  as="textarea"
+                  rows={6}
+                  value={translatedText}
+                  readOnly
+                  placeholder="Translation will appear here..."
+                  style={{ backgroundColor: '#f8f9fa' }}
+                />
+              </Form.Group>
+            </Col>
+          </Row>
 
-      <button
-        className="translate-button"
-        disabled={modelLoading || loading}
-        onClick={() => translate(input, sourceLanguage, targetLanguage)}
-      >
-        Translate
-      </button>
-
-      <div className="progress-bars-container">
-        {loading && (
-          <label>{`Loading models... (happens only once, please be patient :))`}</label>
-        )}
-
-        {progress.map((data) => (
-          <div key={data.file}>
-            <Progress text={data.file} percentage={data.progress} />
+          <div className="text-center mb-4">
+            <Button
+              variant="primary"
+              size="lg"
+              disabled={modelLoading || loading || !input.trim()}
+              onClick={() => translate(input, sourceLanguage, targetLanguage)}
+            >
+              {modelLoading ? (
+                <>
+                  <Spinner animation="border" size="sm" className="me-2" />
+                  Loading model...
+                </>
+              ) : loading ? (
+                <>
+                  <Spinner animation="border" size="sm" className="me-2" />
+                  Translating...
+                </>
+              ) : (
+                'Translate'
+              )}
+            </Button>
           </div>
-        ))}
-      </div>
+
+          {progress.length > 0 && (
+            <div className="mb-4">
+              <h6 className="text-muted mb-3">Loading Progress</h6>
+              {progress.map((data, index) => (
+                <div key={index}>
+                  <Progress text={data.file} percentage={data.progress} />
+                </div>
+              ))}
+            </div>
+          )}
+        </Container>
+      </main>
+      <footer className={styles.footer}>
+        <p>copyright 2025. Developed by Mayur Vijay Kode.</p>
+      </footer>
     </div>
   );
 }
