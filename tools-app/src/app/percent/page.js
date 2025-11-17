@@ -73,6 +73,18 @@ export default function Page() {
                 <button onClick={calculate} style={styles.button}>
                     Calculate
                 </button>
+                <button
+                    type="button"
+                    onClick={() => {
+                        setFrom('')
+                        setTo('')
+                        setResult(null)
+                        setError('')
+                    }}
+                    style={styles.clear}
+                >
+                    Clear
+                </button>
             </div>
 
             {error ? <p style={styles.error}>{error}</p> : null}

@@ -15,7 +15,7 @@ export const styles = {
         borderRadius: 6,
         border: '1px solid #ccc'
     },
-    actions: { marginTop: 20, display: 'flex', justifyContent: 'center', alignItems: 'center' },
+    actions: { marginTop: 20, display: 'flex', justifyContent: 'flex-start', alignItems: 'center', gap: 10 },
     button: {
         padding: '8px 14px',
         fontSize: 16,
@@ -23,6 +23,15 @@ export const styles = {
         border: 'none',
         background: '#0366d6',
         color: '#fff',
+        cursor: 'pointer',
+    },
+    clear: {
+        padding: '8px 14px',
+        fontSize: 16,
+        borderRadius: 6,
+        border: 'none',
+        // background: '#0366d6',
+        // color: '#fff',
         cursor: 'pointer',
     },
     error: { color: 'crimson', marginTop: 12 },
