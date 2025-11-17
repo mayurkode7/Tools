@@ -41,7 +41,9 @@ export default function Page() {
                 <label style={styles.label}>
                     From
                     <input
-                        type="number"
+                        type="text"
+                        inputMode="decimal"
+                        pattern="[0-9]*"
                         step="any"
                         value={from}
                         onChange={(e) => setFrom(e.target.value)}
@@ -54,7 +56,9 @@ export default function Page() {
                 <label style={styles.label}>
                     To
                     <input
-                        type="number"
+                        type="text"
+                        inputMode="decimal"
+                        pattern="[0-9]*"
                         step="any"
                         value={to}
                         onChange={(e) => setTo(e.target.value)}
