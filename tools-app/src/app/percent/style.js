@@ -15,7 +15,7 @@ export const styles = {
         borderRadius: 6,
         border: '1px solid #ccc'
     },
-    actions: { marginTop: 8 },
+    actions: { marginTop: 20, display: 'flex', justifyContent: 'center', alignItems: 'center' },
     button: {
         padding: '8px 14px',
         fontSize: 16,
@@ -23,7 +23,7 @@ export const styles = {
         border: 'none',
         background: '#0366d6',
         color: '#fff',
-        cursor: 'pointer'
+        cursor: 'pointer',
     },
     error: { color: 'crimson', marginTop: 12 },
     result: { marginTop: 12, fontSize: 18 }
