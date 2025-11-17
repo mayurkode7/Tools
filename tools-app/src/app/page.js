@@ -12,6 +12,7 @@ export default function Home() {
     () => [
       { name: "Translator", href: "/translator" },
       { name: "Calculator", href: "/calculator" },
+      { name: "Percent", href: "/percent" },
       // Add more tools here as you build them
     ],
     []
@@ -57,7 +58,7 @@ export default function Home() {
         </ListGroup>
       </main>
       <footer className={styles.footer}>
-        <p>Copyright 2025. Developed by Mayur Vijay Kode.</p>
+        <p>Developed by Mayur Vijay Kode.</p>
       </footer>
     </div>
   );
