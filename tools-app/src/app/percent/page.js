@@ -34,6 +34,7 @@ export default function Page() {
     }
 
     return (
+        <div>
         <main style={styles.container}>
             <h1 style={styles.title}>Percent Calculator</h1>
 
@@ -91,7 +92,16 @@ export default function Page() {
             {result !== null ? (
                 <p style={styles.result}>{`Percent change from ${from} to ${to}: `}<strong>{result}</strong></p>
             ) : null}
+
+           
         </main>
+         <footer style={styles.footer || { marginTop: 24, textAlign: 'center' }}>
+            <a href="/" style={styles.link || { color: '#0070f3', textDecoration: 'none' }}>
+                Home
+            </a>
+        </footer>
+        </div>
+        
     )
 }
 

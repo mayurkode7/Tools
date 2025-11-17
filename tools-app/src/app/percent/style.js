@@ -3,6 +3,7 @@ export const styles = {
         padding: 24,
         fontFamily: 'system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial',
         maxWidth: 640,
+        minHeight: 800,  
         margin: '0 auto'
     },
     title: { marginBottom: 16 },
