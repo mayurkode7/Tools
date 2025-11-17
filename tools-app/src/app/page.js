@@ -13,6 +13,7 @@ export default function Home() {
       { name: "Translator", href: "/translator" },
       { name: "Calculator", href: "/calculator" },
       { name: "Percent", href: "/percent" },
+      { name: "About", href: "/about" },
       // Add more tools here as you build them
     ],
     []
