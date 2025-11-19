@@ -34,7 +34,7 @@ export default function AboutPage() {
                         color: '#111827',
                     }}
                 >
-                    This is the About page for Tools App. Here you'll find information about the project,
+                    This is the About page for Tools App. Here you will find information about the project,
                     its goals, and the people who contributed. The app aims to provide useful utilities
                     and a pleasant developer experience.
                 </p>
