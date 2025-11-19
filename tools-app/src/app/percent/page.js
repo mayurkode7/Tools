@@ -38,6 +38,14 @@ export default function Page() {
         if (e.key === 'Enter') calculate()
     }
 
+    const clear = () => {
+    setFrom('');
+    setTo('');
+    setResult(null);
+    setError('');
+                    
+    }
+
     return (
         <div>
         <main style={styles.container}>
@@ -52,7 +60,7 @@ export default function Page() {
                         pattern="[0-9]*"
                         step="any"
                         value={from}
-                        onChange={(e) => setFrom(e.target.value)}
+                        onChange={(e) => {setFrom(e.target.value), setResult(null)}}
                         onKeyDown={onKeyDown}
                         style={styles.input}
                         placeholder="e.g. 50"
@@ -67,7 +75,7 @@ export default function Page() {
                         pattern="[0-9]*"
                         step="any"
                         value={to}
-                        onChange={(e) => setTo(e.target.value)}
+                        onChange={(e) => {setTo(e.target.value); setResult(null)}}
                         onKeyDown={onKeyDown}
                         style={styles.input}
                         placeholder="e.g. 75"
@@ -81,12 +89,7 @@ export default function Page() {
                 </button>
                 <button
                     type="button"
-                    onClick={() => {
-                        setFrom('')
-                        setTo('')
-                        setResult(null)
-                        setError('')
-                    }}
+                    onClick={clear}
                     style={styles.clear}
                 >
                     Clear
