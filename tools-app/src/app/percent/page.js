@@ -108,8 +108,8 @@ export default function Page() {
          
            
         </main>
-         <footer style={styles.footer || { marginTop: 24, textAlign: 'center' }}>          
-            <Link href={"/"} style={styles.link || { color: '#0070f3', textDecoration: 'none' }}>Home</Link>
+         <footer style={styles.footer || { marginTop: 10, textAlign: 'center' }}>          
+            <Link href={"/"} style={styles.link || { color: '#0070f3', textDecoration: 'none' }}>Home</Link> | <Link href={"/about"} style={styles.link || { color: '#0070f3', textDecoration: 'none' }}>About</Link>
         </footer>
         </div>
         
