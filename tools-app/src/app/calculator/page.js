@@ -1,6 +1,7 @@
 
 'use client';
 import React, { useState } from 'react';
+import RecentOperation from '../UI/components/RecentOperations';
 
 export default function Calculator() {
     const [input, setInput] = useState('');
@@ -75,16 +76,8 @@ export default function Calculator() {
             >
                 Share Result
             </button>
-            <div style={{ marginTop: 20 }}>
-                <h4>Recent Operations</h4>
-                <ul>
-                    {history.map((item, idx) => (
-                        <li key={idx} style={{ fontSize: 16 }}>
-                            {item.input} = {item.result}
-                        </li>
-                    ))}
-                </ul>
-            </div>
+          
+            <RecentOperation history={history} />
         </div>
     );
 }

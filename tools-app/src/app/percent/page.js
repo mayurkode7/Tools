@@ -1,12 +1,15 @@
 'use client'
 import React, { useState } from 'react'
 import { styles } from './style'
+import RecentOperation from '../UI/components/RecentOperations'
 
 export default function Page() {
     const [from, setFrom] = useState('')
     const [to, setTo] = useState('')
     const [result, setResult] = useState(null)
     const [error, setError] = useState('')
+    const [history, setHistory] = useState([]);
+    
 
     const calculate = () => {
         setError('')
@@ -27,6 +30,7 @@ export default function Page() {
 
         const percent = ((b - a) / a) * 100
         setResult(`${percent.toFixed(2)}%`)
+        setHistory([{ from: a, to: b, result: `${percent.toFixed(2)}%` }, ...history.slice(0, 4)]);
     }
 
     const onKeyDown = (e) => {
@@ -89,10 +93,15 @@ export default function Page() {
             </div>
 
             {error ? <p style={styles.error}>{error}</p> : null}
+            
             {result !== null ? (
                 <p style={styles.result}>{`Percent change from ${from} to ${to}: `}<strong>{result}</strong></p>
             ) : null}
 
+
+            <RecentOperation history={history} />
+
+         
            
         </main>
          <footer style={styles.footer || { marginTop: 24, textAlign: 'center' }}>
