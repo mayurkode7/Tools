@@ -8,8 +8,8 @@ export default function RecentOperation({ history }) {
         <>
         {history.length > 0 && (
             <div style={{ marginTop: 32 }}>
-                <h2 >Calculation History</h2>
-                <ul >
+                <h5 >Calculation History</h5>
+                <ul style={{ marginTop: 20 }}>
                     {history.map((item, index) => (
                         <li key={index} style={{ marginBottom: 15 }}>
                             From {item.from} to {item.to}: <strong>{item.result}</strong>
