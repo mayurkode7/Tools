@@ -1,4 +1,5 @@
 'use client'
+import Link from "next/link";
 import React, { useState } from 'react'
 import { styles } from './style'
 import RecentOperation from '../UI/components/RecentOperations'
@@ -104,10 +105,8 @@ export default function Page() {
          
            
         </main>
-         <footer style={styles.footer || { marginTop: 24, textAlign: 'center' }}>
-            <a href="/" style={styles.link || { color: '#0070f3', textDecoration: 'none' }}>
-                Home
-            </a>
+         <footer style={styles.footer || { marginTop: 24, textAlign: 'center' }}>          
+            <Link href={"/"} style={styles.link || { color: '#0070f3', textDecoration: 'none' }}>Home</Link>
         </footer>
         </div>
         
