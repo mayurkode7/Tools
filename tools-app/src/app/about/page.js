@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export const metadata = {
     title: 'About — Tools App',
     description: 'About page for Tools App: learn about the project, goals, and contributors.',
@@ -5,6 +7,7 @@ export const metadata = {
 
 export default function AboutPage() {
     return (
+        <>
         <main
             style={{
                 display: 'flex',
@@ -40,5 +43,10 @@ export default function AboutPage() {
                 </p>
             </div>
         </main>
+         <footer style={ {  textAlign: 'center' }}>          
+            <Link href={"/"} style={ { color: '#0070f3', textDecoration: 'none' }}>Home</Link> | <Link href={"/about"} style={{ color: '#0070f3', textDecoration: 'none' }}>About</Link>
+        </footer>
+
+        </>
     );
 }
