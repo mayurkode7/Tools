@@ -4,6 +4,13 @@ export const metadata = {
 };
 
 export default function RecentOperation({ history }) {
+
+    const handleShare = async (result) => {
+        if (result !== '') {
+            await navigator.clipboard.writeText(result.toString());
+            alert('Result copied to clipboard!');
+        }
+    };
     return (
         <>
         {history.length > 0 && (
@@ -13,6 +20,20 @@ export default function RecentOperation({ history }) {
                     {history.map((item, index) => (
                         <li key={index} style={{ marginBottom: 15 }}>
                             From {item.from} to {item.to} Percent Change is =  <strong>{item.result}</strong>
+                            <button
+                                onClick={() => {
+                                    const finalResult = `From ${item.from} to ${item.to} Percent Change is ${item.result}.\n\nCalculated using Tools App. \n\nUse Tools App at: https://tools-alpha-beige.vercel.app/percent`;
+                                    handleShare(finalResult.toString())
+                                }}
+                                style={{
+                                    marginLeft: 10,
+                                    padding: '2px 6px',
+                                    fontSize: 12,
+                                    cursor: 'pointer',
+                                }}
+                            >
+                                Share
+                            </button>
                         </li>
                     ))}
                 </ul>

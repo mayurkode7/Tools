@@ -44,7 +44,7 @@ export default function Page() {
     setResult(null);
     setError('');
                     
-    }
+    }    
 
     return (
         <div>
