@@ -12,7 +12,7 @@ export default function RecentOperation({ history }) {
                 <ul style={{ marginTop: 20 }}>
                     {history.map((item, index) => (
                         <li key={index} style={{ marginBottom: 15 }}>
-                            From {item.from} to {item.to}: <strong>{item.result}</strong>
+                            From {item.from} to {item.to} Percent Change is =  <strong>{item.result}</strong>
                         </li>
                     ))}
                 </ul>
