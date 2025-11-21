@@ -26,10 +26,15 @@ export default function RecentOperation({ history }) {
                                     handleShare(finalResult.toString())
                                 }}
                                 style={{
-                                    marginLeft: 10,
-                                    padding: '2px 6px',
-                                    fontSize: 12,
-                                    cursor: 'pointer',
+                                   
+        fontSize: 14,
+        borderRadius: 6,
+        border: 'none',
+        backgroundColor: "lightgreen",
+        cursor: 'pointer',
+        height: 28,
+        padding: '0 12px',
+        marginLeft: 10,
                                 }}
                             >
                                 Share
