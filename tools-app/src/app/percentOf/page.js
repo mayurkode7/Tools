@@ -5,8 +5,8 @@ import { styles } from './style'
 import RecentOperation from '../UI/components/RecentOperations'
 
 export default function Page() {
-    const [from, setFrom] = useState('')
-    const [to, setTo] = useState('')
+    const [is, setIs] = useState('')
+    const [of, setOf] = useState('')
     const [result, setResult] = useState(null)
     const [error, setError] = useState('')
     const [history, setHistory] = useState([]);
@@ -16,8 +16,8 @@ export default function Page() {
         setError('')
         setResult(null)
 
-        const a = parseFloat(from)
-        const b = parseFloat(to)
+        const a = parseFloat(is)
+        const b = parseFloat(of)
 
         if (Number.isNaN(a) || Number.isNaN(b)) {
             setError('Please enter valid numbers for both fields.')
@@ -29,9 +29,11 @@ export default function Page() {
             return
         }
 
-        const percent = ((b - a) / a) * 100
-        setResult(`${percent.toFixed(2)}%`)
-        setHistory([`Percent change from ${from} to ${to} is ${percent.toFixed(2)}%`, ...history.slice(0, 4)]);
+        // const percent = ((b - a) / a) * 100
+        const percent = (b / 100) * a;
+        setResult(`${percent.toFixed(2)}`)
+        // setHistory([{ from: is, to: of, result: `${percent.toFixed(2)}%` }, ...history.slice(0, 4)]);
+        setHistory([`${is}% of ${of} is: ${percent.toFixed(2)}`, ...history.slice(0, 4)]);
     }
 
     const onKeyDown = (e) => {
@@ -39,8 +41,8 @@ export default function Page() {
     }
 
     const clear = () => {
-    setFrom('');
-    setTo('');
+    setIs('');
+    setOf('');
     setResult(null);
     setError('');
                     
@@ -49,18 +51,18 @@ export default function Page() {
     return (
         <div>
         <main style={styles.container}>
-            <h1 style={styles.title}>Percent Change</h1>
+            <h1 style={styles.title}>Percent Of</h1>
 
             <div style={styles.row}>
                 <label style={styles.label}>
-                    From
+                    What is
                     <input
                         type="text"
                         inputMode="decimal"
                         pattern="[0-9]*"
                         step="any"
-                        value={from}
-                        onChange={(e) => {setFrom(e.target.value), setResult(null)}}
+                        value={is}
+                        onChange={(e) => {setIs(e.target.value), setResult(null)}}
                         onKeyDown={onKeyDown}
                         style={styles.input}
                         placeholder="e.g. 50"
@@ -68,14 +70,14 @@ export default function Page() {
                 </label>
 
                 <label style={styles.label}>
-                    To
+                    % of
                     <input
                         type="text"
                         inputMode="decimal"
                         pattern="[0-9]*"
                         step="any"
-                        value={to}
-                        onChange={(e) => {setTo(e.target.value); setResult(null)}}
+                        value={of}
+                        onChange={(e) => {setOf(e.target.value); setResult(null)}}
                         onKeyDown={onKeyDown}
                         style={styles.input}
                         placeholder="e.g. 75"
@@ -99,7 +101,8 @@ export default function Page() {
             {error ? <p style={styles.error}>{error}</p> : null}
             
             {result !== null ? (
-                <p style={styles.result}>{`Percent change from ${from} to ${to}: `}<strong>{result}</strong></p>
+                // <p style={styles.result}>{`Percent change from ${is} to ${of}: `}<strong>{result}</strong></p>
+                <p style={styles.result}>{`${is}% of ${of} is: `}<strong>{result}</strong></p>
             ) : null}
 
 
