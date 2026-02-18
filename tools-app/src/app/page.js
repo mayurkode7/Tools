@@ -14,6 +14,7 @@ export default function Home() {
       { name: "Calculator", href: "/calculator" },
       { name: "Percent Change", href: "/percent" },
       { name: "Percent Of", href: "/percentOf" },
+      { name: "Annual Return", href: "/annualReturn" },
       { name: "About", href: "/about" },
       // Add more tools here as you build them
     ],
