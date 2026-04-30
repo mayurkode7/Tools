@@ -66,7 +66,7 @@ export default function EmiPage() {
             totalPayment: formatCurrency(totalPayment)
         });
 
-        setHistory([`EMI for ${principal} at ${rate}% for ${n} mos is: ${formattedEmi}`, ...history.slice(0, 4)]);
+        setHistory([`EMI for ${principal} at ${rate}% for ${n} months is: ${formattedEmi}`, ...history.slice(0, 4)]);
     };
 
     const onKeyDown = (e) => {
