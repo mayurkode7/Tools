@@ -161,13 +161,16 @@ export default function EmiPage() {
 
                 {result !== null ? (
                     <div style={styles.result}>
+                        <span>Principal Amount: <strong>{principal}</strong></span>
+                        <span>Interest Rate: <strong>{rate}%</strong></span>
+                        <span>Tenure: <strong>{tenure} months</strong></span>
                         <span>Monthly EMI: <strong>{result.emi}</strong></span>
                         <span>Total Interest: <strong>{result.totalInterest}</strong></span>
                         <span>Total Payment: <strong>{result.totalPayment}</strong></span>
                     </div>
                 ) : null}
 
-                <RecentOperation history={history} />
+                {/* <RecentOperation history={history} /> */}
             </main>
             <footer style={styles.footer}>
                 <Link href={"/"} style={styles.link}>Home</Link> | <Link href={"/about"} style={styles.link}>About</Link>
