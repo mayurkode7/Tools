@@ -15,10 +15,11 @@ export default function Home() {
       { name: "Percent Change", href: "/percent" },
       { name: "Percent Of", href: "/percentOf" },
       { name: "Annual Return", href: "/annualReturn" },
+      { name: "EMI", href: "/emi" },
       { name: "About", href: "/about" },
       // Add more tools here as you build them
     ],
-    []
+    [],
   );
 
   const filteredTools = useMemo(() => {
