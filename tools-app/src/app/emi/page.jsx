@@ -1,7 +1,6 @@
 'use client'
 import Link from "next/link";
 import React, { useState } from 'react';
-import RecentOperation from '../UI/components/RecentOperations';
 
 // Defining styles inline to ensure it works without a separate style.js file
 const styles = {
@@ -15,6 +14,7 @@ const styles = {
     clear: { flex: 1, padding: 10, fontSize: 16, background: '#eaeaea', color: '#333', border: 'none', borderRadius: 4, cursor: 'pointer' },
     error: { color: 'red', marginBottom: 10 },
     result: { fontSize: 16, marginBottom: 20, padding: 15, background: 'var(--gray-alpha-200, #f9f9f9)', borderRadius: 4, display: 'flex', flexDirection: 'column', gap: 8 },
+    shareButton: { marginTop: 15, padding: '8px 16px', background: '#28a745', color: 'white', border: 'none', borderRadius: 4, cursor: 'pointer', alignSelf: 'center', fontSize: 14 },
     footer: { marginTop: 10, textAlign: 'center' },
     link: { color: '#0070f3', textDecoration: 'none' }
 };
@@ -25,7 +25,6 @@ export default function EmiPage() {
     const [tenure, setTenure] = useState('');
     const [result, setResult] = useState(null);
     const [error, setError] = useState('');
-    const [history, setHistory] = useState([]);
 
     const calculate = () => {
         setError('');
@@ -66,7 +65,6 @@ export default function EmiPage() {
             totalPayment: formatCurrency(totalPayment)
         });
 
-        setHistory([`EMI for ${principal} at ${rate}% for ${n} months is: ${formattedEmi}`, ...history.slice(0, 4)]);
     };
 
     const onKeyDown = (e) => {
@@ -94,6 +92,29 @@ export default function EmiPage() {
         
         setPrincipal(formatted);
         setResult(null);
+    };
+
+    const handleShare = async () => {
+        if (!result) return;
+
+        const shareText = `EMI Calculation Details:
+- Principal Amount: ₹ ${principal}
+- Annual Interest Rate: ${rate}%
+- Tenure: ${tenure} months
+- Monthly EMI: ₹ ${result.emi}
+- Total Interest: ₹ ${result.totalInterest}
+- Total Payment: ₹ ${result.totalPayment}
+
+Calculated using Tools App. Developed by: Mayur Vijay Kode.
+Use Tools App at: https://tools-alpha-beige.vercel.app`;
+
+        try {
+            await navigator.clipboard.writeText(shareText);
+            alert('EMI details copied to clipboard!');
+        } catch (err) {
+            console.error('Failed to copy details:', err);
+            alert('Failed to copy details.');
+        }
     };
 
     return (
@@ -161,16 +182,18 @@ export default function EmiPage() {
 
                 {result !== null ? (
                     <div style={styles.result}>
-                        <span>Principal Amount: <strong>{principal}</strong></span>
+                        <span>Principal Amount: <strong>₹ {principal}</strong></span>
                         <span>Interest Rate: <strong>{rate}%</strong></span>
                         <span>Tenure: <strong>{tenure} months</strong></span>
-                        <span>Monthly EMI: <strong>{result.emi}</strong></span>
-                        <span>Total Interest: <strong>{result.totalInterest}</strong></span>
-                        <span>Total Payment: <strong>{result.totalPayment}</strong></span>
+                        <span>Monthly EMI: <strong>₹ {result.emi}</strong></span>
+                        <span>Total Interest: <strong>₹ {result.totalInterest}</strong></span>
+                        <span>Total Payment: <strong>₹ {result.totalPayment}</strong></span>
+                        <button onClick={handleShare} style={styles.shareButton}>
+                            Share
+                        </button>
                     </div>
                 ) : null}
 
-                {/* <RecentOperation history={history} /> */}
             </main>
             <footer style={styles.footer}>
                 <Link href={"/"} style={styles.link}>Home</Link> | <Link href={"/about"} style={styles.link}>About</Link>
